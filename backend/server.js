@@ -1,10 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 import dotenv from 'dotenv';
 
 import authRoutes from './routes/auth.js';
 import siteRoutes from './routes/site.js';
+import uploadRoutes from './routes/upload.js';
 
 dotenv.config();
 
@@ -18,9 +20,13 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 // Routes
 app.use('/auth', authRoutes);
 app.use('/site', siteRoutes);
+app.use('/upload', uploadRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

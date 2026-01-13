@@ -1,31 +1,41 @@
-import { useState, useCallback } from 'react';
-import { api, getDraftToken } from '../lib/utils';
+import { useState, useCallback } from "react";
+import { api, getDraftToken } from "../lib/utils";
 
 const initialSiteData = {
   type: null, // 'personal' | 'brand'
   content: {
-    name: '',
-    tagline: '',
-    profilePhoto: '',
-    bio: '',
-    logo: '',
-    description: '',
+    name: "",
+    tagline: "",
+    profilePhoto: "",
+    bio: "",
+    logo: "",
+    description: "",
   },
   colors: {
-    primary: '#3B82F6',
-    secondary: '#1E40AF',
+    primary: "#3B82F6",
+    secondary: "#1E40AF",
   },
   sections: {
     gallery: { enabled: false, images: [] },
-    videos: { enabled: false, links: [''] },
-    services: { enabled: false, items: [{ title: '', description: '', price: '' }] },
-    location: { enabled: false, address: '', mapLink: '' },
-    founder: { enabled: false, name: '', photo: '', bio: '' },
+    videos: { enabled: false, links: [""] },
+    services: {
+      enabled: false,
+      items: [{ title: "", description: "", price: "" }],
+    },
+    location: { enabled: false, address: "", mapLink: "" },
+    founder: { enabled: false, name: "", photo: "", bio: "" },
     social: {
       enabled: false,
-      links: { instagram: '', twitter: '', linkedin: '', facebook: '', youtube: '', website: '' }
+      links: {
+        instagram: "",
+        twitter: "",
+        linkedin: "",
+        facebook: "",
+        youtube: "",
+        website: "",
+      },
     },
-    cta: { enabled: false, whatsapp: '', phone: '' },
+    cta: { enabled: false, whatsapp: "", phone: "" },
   },
 };
 
@@ -36,9 +46,9 @@ export function useSiteBuilder() {
   const [step, setStep] = useState(0); // 0: type, 1: basic, 2: sections, 3: preview
 
   const updateSiteData = useCallback((path, value) => {
-    setSiteData(prev => {
+    setSiteData((prev) => {
       const newData = { ...prev };
-      const keys = path.split('.');
+      const keys = path.split(".");
       let current = newData;
 
       for (let i = 0; i < keys.length - 1; i++) {
@@ -52,7 +62,7 @@ export function useSiteBuilder() {
   }, []);
 
   const toggleSection = useCallback((sectionName) => {
-    setSiteData(prev => ({
+    setSiteData((prev) => ({
       ...prev,
       sections: {
         ...prev.sections,
@@ -68,8 +78,8 @@ export function useSiteBuilder() {
     setSaving(true);
     try {
       const draftToken = getDraftToken();
-      const response = await api('/site/preview', {
-        method: 'POST',
+      const response = await api("/site/preview", {
+        method: "POST",
         body: JSON.stringify({
           siteId,
           draftToken,
@@ -82,7 +92,7 @@ export function useSiteBuilder() {
       setSiteId(response.siteId);
       return response;
     } catch (err) {
-      console.error('Save draft failed:', err);
+      console.error("Save draft failed:", err);
       throw err;
     } finally {
       setSaving(false);
@@ -93,7 +103,7 @@ export function useSiteBuilder() {
     setSiteData(initialSiteData);
     setSiteId(null);
     setStep(0);
-    localStorage.removeItem('draftToken');
+    localStorage.removeItem("draftToken");
   }, []);
 
   return {
