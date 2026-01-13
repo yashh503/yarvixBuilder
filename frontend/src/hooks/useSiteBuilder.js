@@ -12,8 +12,8 @@ const initialSiteData = {
     description: "",
   },
   colors: {
-    primary: "#3B82F6",
-    secondary: "#1E40AF",
+    primary: "#EF4444",
+    secondary: "#1F2937",
   },
   sections: {
     gallery: { enabled: false, images: [] },
