@@ -69,14 +69,13 @@ export function PaymentModal({ open, onClose, siteId, siteData, onPublished }) {
         method: "POST",
         body: JSON.stringify({ givenSlug }),
       });
-      console.log(check, "checkcheck");
       if (check.success) {
         setGivenValidSlug(givenSlug);
       } else {
         setError(check.error);
       }
     } catch (e) {
-      console.log(e.data, "yarvixtech-6ha9ooyarvixtech-6ha9oo");
+      setError("Something is off!!");
     }
   };
 

@@ -134,7 +134,6 @@ router.post("/create-order", async (req, res) => {
 router.post("/checkavailability", async (req, res) => {
   try {
     const { givenSlug } = req.body;
-    console.log(givenSlug);
     const exists = await Site.findOne({ slug: givenSlug });
     if (exists) {
       return res.json({ success: false, error: "This slug is already taken." });
